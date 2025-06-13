@@ -148,6 +148,7 @@ offensive-first-lab/
 │   └── nginx.conf
 ├── scoring/
 │   ├── scoring-server.py
+│   ├── Dockerfile
 │   └── requirements.txt
 ├── scripts/
 │   ├── reset.sh
