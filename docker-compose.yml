@@ -82,17 +82,16 @@ services:
       - wordpress
     restart: unless-stopped
 
-  scoring:
-    image: alpine
-    container_name: scoring
+    scoring:
+    build: ./scoring
+    ports:
+      - "5000:5000"
     volumes:
       - ./flags:/flags:ro
+      - ./scoring:/app/scoring
     networks:
       - offensive_net
     restart: unless-stopped
-networks:
-  offensive_net:
-    driver: bridge
-
-volumes:
-  db_data:
+    networks:
+        offensive_net:
+          driver: bridge
