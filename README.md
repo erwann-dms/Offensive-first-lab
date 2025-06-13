@@ -13,11 +13,8 @@
 | SSH        | Serveur SSH avec mot de passe faible               | `localhost:2222`       |
 | WordPress  | CMS vulnérable                                     | `http://localhost:8082` |
 | WebDAV     | Stockage WebDAV avec authentification faible       | `http://localhost:8083` |
-| Attacker   | Kali Linux prêt à l’emploi pour attaquer le lab    | shell CLI              |
 | Proxy      | Nginx reverse proxy (accès aux services web)       | `http://localhost/`    |
 | Scoring    | Serveur Flask de soumission de flag                | `http://localhost:5000` |
-| WordPress  | CMS vulnérable                                     | `http://localhost:8082` |
-| WebDAV     | Serveur WebDAV (upload vulnérable)                 | `http://localhost:8083` |
 | Kali       | Conteneur d’attaque (outils installés)             | `accès via Docker CLI` |
 
 ---
@@ -62,6 +59,7 @@ Pour réinitialiser totalement le lab (conteneurs + volumes) :
 | WordPress  | `http://localhost:8082`   |
 | WebDAV     | `http://localhost:8083`   |
 | Proxy      | `http://localhost/`       |
+| Scoring      | `http://localhost:5000` |
 | Kali (CLI) | `docker exec -it kali bash` |
 
 Identifiants par défaut disponibles dans `.env.example` si fournis.
@@ -122,7 +120,7 @@ Un script client (submit_flag.py) est fourni. Exemple d’utilisation :
 ```bash
 python3 submit_flag.py le_service le_flag
 ```
-Le serveur retourne si le flag est valide.
+Le serveur retourne si le flag est valide, et le score est mis à jour.
 
 ---
 
@@ -142,12 +140,15 @@ offensive-first-lab/
 ├── flags/
 │   ├── dvwa/flag.txt
 │   ├── ftp/flag.txt
-│   └── ssh/flag.txt
+│   ├── ssh/flag.txt
+│   ├── webdav/flag.txt
+│   ├── wordpress/flag.txt
 ├── proxy/
 │   ├── Dockerfile
 │   └── nginx.conf
 ├── scoring/
-│   └── scoring-server.py
+│   ├── scoring-server.py
+│   └── requirements.txt
 ├── scripts/
 │   ├── reset.sh
 │   └── start.sh
@@ -155,13 +156,17 @@ offensive-first-lab/
 │   ├── dvwa/Dockerfile
 │   ├── ftp/Dockerfile
 │   ├── ssh/Dockerfile
-│   └── webdav/
-│       ├── Dockerfile
-│       └── webdav.conf
+│   ├── webdav/
+│   │   ├── Dockerfile
+│   │   └── webdav.conf
+│   └── wordpress/
+│       └── Dockerfile
 ├── submit_flag.py
 ├── .env.example
 ├── docker-compose.yml
+├── LICENSE
 └── README.md
+
 ```
 
 ---
@@ -171,7 +176,9 @@ offensive-first-lab/
 - ✅ Reverse proxy intégré (NGINX)
 - ✅ Réseau Docker dédié pour l’isolation
 - ✅ Container Kali Linux intégré
-- ✅ Scripts de scoring & validation des flags
+- ✅ Système de scoring avec flags persistent
+- ✅ Dockerfiles personnalisables
+- ✅ Thélatique réaliste et pédagogique
 
 ---
 
