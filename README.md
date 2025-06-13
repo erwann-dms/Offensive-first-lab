@@ -30,7 +30,7 @@
 
 ---
 
-## 🚀 Installation & Lancement
+## Installation & Lancement
 
 ```bash
 git clone https://github.com/votre-utilisateur/offensive-lab.git
@@ -38,6 +38,16 @@ cd offensive-lab
 cp .env.example .env
 chmod +x scripts/start.sh
 ./scripts/start.sh
+```
+
+---
+
+## Reset
+
+Pour réinitialiser totalement le lab (conteneurs + volumes) :
+
+```bash
+./scripts/reset.sh
 ```
 
 ---
@@ -97,6 +107,14 @@ Récupérer `flag.txt`
 
 ---
 
+## Système de scoring (Dashboard)
+
+Interface web : http://localhost:5000
+
+Soumission via submit_flag.py
+
+---
+
 ## Soumission de flag
 
 Un script client (submit_flag.py) est fourni. Exemple d’utilisation :
@@ -131,6 +149,7 @@ offensive-first-lab/
 ├── scoring/
 │   └── scoring-server.py
 ├── scripts/
+│   ├── reset.sh
 │   └── start.sh
 ├── services/
 │   ├── dvwa/Dockerfile
