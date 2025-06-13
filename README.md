@@ -15,6 +15,10 @@
 | WebDAV     | Stockage WebDAV avec authentification faible       | `http://localhost:8083` |
 | Attacker   | Kali Linux prêt à l’emploi pour attaquer le lab    | shell CLI              |
 | Proxy      | Nginx reverse proxy (accès aux services web)       | `http://localhost/`    |
+| Scoring    | Serveur Flask de soumission de flag                | `http://localhost:5000` |
+| WordPress  | CMS vulnérable                                     | `http://localhost:8082` |
+| WebDAV     | Serveur WebDAV (upload vulnérable)                 | `http://localhost:8083` |
+| Kali       | Conteneur d’attaque (outils installés)             | `accès via Docker CLI` |
 
 ---
 
@@ -93,6 +97,17 @@ Récupérer `flag.txt`
 
 ---
 
+## Soumission de flag
+
+Un script client (submit_flag.py) est fourni. Exemple d’utilisation :
+
+```bash
+python3 submit_flag.py le_service le_flag
+```
+Le serveur retourne si le flag est valide.
+
+---
+
 ## Avertissement
 
 ⚠️ Ce lab est uniquement à usage pédagogique. Ne jamais l’exposer sur Internet ni l’utiliser sur une infrastructure réelle sans autorisation.
@@ -102,33 +117,31 @@ Récupérer `flag.txt`
 ## Arborescence du projet
 
 ```bash
-offensive-lab/
-├── docker-compose.yml
-├── .env.example
-├── scripts/
-│   └── start.sh
-├── services/
-│   ├── dvwa/
-│   ├── ftp/
-│   ├── ssh/
-│   ├── wordpress/
-│   └── webdav/
+offensive-first-lab/
 ├── attacker/
 │   └── kali/
+│       └── Dockerfile
 ├── flags/
 │   ├── dvwa/flag.txt
 │   ├── ftp/flag.txt
 │   └── ssh/flag.txt
-├── scoring/
-│   └── scoring-server.py
 ├── proxy/
 │   ├── Dockerfile
 │   └── nginx.conf
-├── docs/
-│   ├── cheatsheets.md
-│   └── exploitation-guides/
-│       └── dvwa.md
-├── LICENSE
+├── scoring/
+│   └── scoring-server.py
+├── scripts/
+│   └── start.sh
+├── services/
+│   ├── dvwa/Dockerfile
+│   ├── ftp/Dockerfile
+│   ├── ssh/Dockerfile
+│   └── webdav/
+│       ├── Dockerfile
+│       └── webdav.conf
+├── submit_flag.py
+├── .env.example
+├── docker-compose.yml
 └── README.md
 ```
 
