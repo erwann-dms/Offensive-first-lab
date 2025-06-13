@@ -82,8 +82,8 @@ Analyse de logs via un SIEM ajouté
 ---
 
 ## Arborescence du projet
-pgsql
 
+```bash
 offensive-lab/
 ├── docker-compose.yml
 ├── .env.example
@@ -100,7 +100,7 @@ offensive-lab/
 │   ├── Dockerfile
 │   └── nginx.conf
 └── README.md
-
+```
 ---
 
 ## Bonus
@@ -112,3 +112,9 @@ Reverse proxy intégré (NGINX)
 ## Réseau Docker dédié pour l’isolation
 
 Configuration centralisée via .env
+
+---
+
+## LICENSE
+
+MIT
