@@ -1,42 +1,77 @@
-version: '3.9'
+version: '3.8'
 
 services:
   dvwa:
     build: ./services/dvwa
-    container_name: dvwa
     ports:
       - "8081:80"
     networks:
-      - pentest-lab
+      - offensive-net
 
   ftp:
     build: ./services/ftp
-    container_name: vulnerable-ftp
     ports:
       - "21:21"
     networks:
-      - pentest-lab
+      - offensive-net
 
   ssh:
     build: ./services/ssh
-    container_name: weak-ssh
     ports:
       - "2222:22"
-    environment:
-      - SSH_PASSWORD=${SSH_PASSWORD}
     networks:
-      - pentest-lab
+      - offensive-net
+
+  wordpress:
+    image: wordpress:latest
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+    ports:
+      - "8082:80"
+    depends_on:
+      - db
+    networks:
+      - offensive-net
+
+  db:
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+    networks:
+      - offensive-net
+
+  webdav:
+    build: ./services/webdav
+    ports:
+      - "8083:80"
+    networks:
+      - offensive-net
+
+  kali:
+    build: ./attacker/kali
+    tty: true
+    stdin_open: true
+    networks:
+      - offensive-net
 
   proxy:
     build: ./proxy
-    container_name: reverse-proxy
     ports:
       - "80:80"
     depends_on:
       - dvwa
+      - wordpress
+      - webdav
     networks:
-      - pentest-lab
+      - offensive-net
 
 networks:
-  pentest-lab:
+  offensive-net:
     driver: bridge
