@@ -1,86 +1,98 @@
-version: '3.8'
+version: "3.8"
 
 services:
   dvwa:
     build: ./services/dvwa
+    container_name: dvwa
     ports:
-      - "8081:80"
+      - "${DVWA_PORT}:80"
     networks:
-      - offensive-net
+      - offensive_net
+    restart: unless-stopped
 
   ftp:
     build: ./services/ftp
+    container_name: ftp
     ports:
-      - "21:21"
+      - "${FTP_PORT}:21"
     networks:
-      - offensive-net
+      - offensive_net
+    restart: unless-stopped
 
   ssh:
     build: ./services/ssh
+    container_name: ssh
     ports:
-      - "2222:22"
+      - "${SSH_PORT}:22"
     networks:
-      - offensive-net
-
-  wordpress:
-    image: wordpress:latest
-    environment:
-      WORDPRESS_DB_HOST: db
-      WORDPRESS_DB_USER: wordpress
-      WORDPRESS_DB_PASSWORD: wordpress
-      WORDPRESS_DB_NAME: wordpress
-    ports:
-      - "8082:80"
-    depends_on:
-      - db
-    networks:
-      - offensive-net
-
-  db:
-    image: mariadb
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: wordpress
-      MYSQL_USER: wordpress
-      MYSQL_PASSWORD: wordpress
-    networks:
-      - offensive-net
+      - offensive_net
+    restart: unless-stopped
 
   webdav:
     build: ./services/webdav
+    container_name: webdav
     ports:
-      - "8083:80"
+      - "${WEBDAV_PORT}:80"
     networks:
-      - offensive-net
+      - offensive_net
+    restart: unless-stopped
 
-  kali:
-    build: ./attacker/kali
-    tty: true
-    stdin_open: true
-    networks:
-      - offensive-net
-
-  scoring:
-    build: ./scoring
+  wordpress:
+    build: ./services/wordpress
+    container_name: wordpress
     ports:
-      - "5000:5000"
+      - "${WORDPRESS_PORT}:80"
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: wordpressuser
+      WORDPRESS_DB_PASSWORD: wordpresspass
+      WORDPRESS_DB_NAME: wordpressdb
+    depends_on:
+      - db
+    networks:
+      - offensive_net
+    restart: unless-stopped
+
+  db:
+    image: mysql:5.7
+    container_name: wordpress_db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: wordpressdb
+      MYSQL_USER: wordpressuser
+      MYSQL_PASSWORD: wordpresspass
     volumes:
-      - ./flags:/flags:ro
+      - db_data:/var/lib/mysql
     networks:
-      - offensive-net
+      - offensive_net
+    restart: unless-stopped
 
   proxy:
     build: ./proxy
+    container_name: proxy
     ports:
-      - "80:80"
+      - "${PROXY_PORT}:80"
+    networks:
+      - offensive_net
     depends_on:
       - dvwa
-      - wordpress
+      - ftp
+      - ssh
       - webdav
-    networks:
-      - offensive-net
+      - wordpress
+    restart: unless-stopped
 
+  scoring:
+    image: alpine
+    container_name: scoring
+    volumes:
+      - ./flags:/flags:ro
+    networks:
+      - offensive_net
+    restart: unless-stopped
 networks:
-  offensive-net:
+  offensive_net:
     driver: bridge
+
+volumes:
+  db_data:
