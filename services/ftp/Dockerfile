@@ -1,8 +1,8 @@
-FROM fauria/vsftpd
+FROM stilliard/pure-ftpd
 
-ENV FTP_USER anonymous
-ENV FTP_PASS ''
-ENV PASV_ADDRESS 127.0.0.1
-ENV PASV_ENABLE=YES
+ENV PUBLICHOST localhost
+ENV FTP_USER_NAME $FTP_USER
+ENV FTP_USER_PASS $FTP_PASS
+ENV FTP_USER_HOME /home/ftpusers
 
-EXPOSE 21
+CMD ["/run.sh", "-E", "-c", "5", "-C", "5", "-l", "puredb:/etc/pure-ftpd/pureftpd.pdb", "-j", "-R", "-P", "localhost", "-p", "30000:30009"]
