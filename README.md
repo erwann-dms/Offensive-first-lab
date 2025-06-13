@@ -108,6 +108,7 @@ offensive-lab/
 ├── proxy/
 │   ├── Dockerfile
 │   └── nginx.conf
+├── LICENSE
 └── README.md
 ```
 ---
