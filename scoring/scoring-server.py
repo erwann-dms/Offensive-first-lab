@@ -1,23 +1,22 @@
+from flask import Flask, request, jsonify
 import os
 
-print("[+] Vérification des flags...")
+app = Flask(__name__)
+
+FLAG_DIR = "../flags/"
 flags = {
-    "dvwa": "ER{dvwa_web_shell_access}",
-    "ftp": "ER{ftp_file_exfiltration}",
-    "ssh": "ER{ssh_weak_password_found}"
+    "dvwa": open(FLAG_DIR + "dvwa/flag.txt").read().strip(),
+    "ftp": open(FLAG_DIR + "ftp/flag.txt").read().strip(),
+    "ssh": open(FLAG_DIR + "ssh/flag.txt").read().strip(),
 }
 
-found = 0
-for service, expected in flags.items():
-    try:
-        with open(f"../flags/{service}/flag.txt") as f:
-            content = f.read().strip()
-            if content == expected:
-                print(f"[✔] {service} : flag correct")
-                found += 1
-            else:
-                print(f"[✘] {service} : flag incorrect")
-    except FileNotFoundError:
-        print(f"[!] {service} : flag manquant")
+@app.route("/submit", methods=["POST"])
+def submit_flag():
+    data = request.get_json()
+    service = data.get("service")
+    submitted = data.get("flag")
+    correct = flags.get(service) == submitted
+    return jsonify({"valid": correct})
 
-print(f"\nTotal : {found}/{len(flags)} flags trouvés")
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
