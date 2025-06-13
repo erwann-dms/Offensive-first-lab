@@ -165,6 +165,7 @@ offensive-first-lab/
 ├── submit_flag.py
 ├── .env.example
 ├── docker-compose.yml
+├── SECURITY.md
 ├── LICENSE
 └── README.md
 
