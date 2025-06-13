@@ -1,0 +1,24 @@
+#!/usr/bin/env python3
+import requests
+import json
+import sys
+
+URL = "http://localhost:5000/submit"
+
+def submit_flag(service, flag):
+    payload = {"service": service, "flag": flag}
+    r = requests.post(URL, json=payload)
+    if r.status_code == 200:
+        data = r.json()
+        if data.get("valid"):
+            print(f"[✓] Flag correct pour {service}!")
+        else:
+            print(f"[x] Flag incorrect pour {service}.")
+    else:
+        print("[!] Erreur côté serveur")
+
+if __name__ == "__main__":
+    if len(sys.argv) != 3:
+        print("Usage: python3 submit_flag.py <service> <flag>")
+        sys.exit(1)
+    submit_flag(sys.argv[1], sys.argv[2])
