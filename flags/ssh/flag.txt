@@ -1,0 +1,1 @@
+ER{ssh_weak_password_found}
