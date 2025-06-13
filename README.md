@@ -186,3 +186,11 @@ offensive-first-lab/
 ## LICENSE
 
 MIT
+
+---
+
+## SECURITY
+
+Fichier disponible sous le nom de SECURITY.md
+
+
