@@ -1,4 +1,4 @@
-# Offensive Lab
+# Offensive first Lab
 
 **Offensive Lab** est un environnement clé-en-main de **pentest local**, conçu avec Docker Compose. Il regroupe plusieurs services vulnérables dans un réseau isolé pour s'exercer à des attaques de cybersécurité offensive.
 
