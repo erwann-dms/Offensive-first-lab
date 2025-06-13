@@ -61,6 +61,15 @@ services:
     networks:
       - offensive-net
 
+  scoring:
+    build: ./scoring
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./flags:/flags:ro
+    networks:
+      - offensive-net
+
   proxy:
     build: ./proxy
     ports:
