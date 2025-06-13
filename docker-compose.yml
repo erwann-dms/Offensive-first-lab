@@ -1,0 +1,42 @@
+version: '3.9'
+
+services:
+  dvwa:
+    build: ./services/dvwa
+    container_name: dvwa
+    ports:
+      - "8081:80"
+    networks:
+      - pentest-lab
+
+  ftp:
+    build: ./services/ftp
+    container_name: vulnerable-ftp
+    ports:
+      - "21:21"
+    networks:
+      - pentest-lab
+
+  ssh:
+    build: ./services/ssh
+    container_name: weak-ssh
+    ports:
+      - "2222:22"
+    environment:
+      - SSH_PASSWORD=${SSH_PASSWORD}
+    networks:
+      - pentest-lab
+
+  proxy:
+    build: ./proxy
+    container_name: reverse-proxy
+    ports:
+      - "80:80"
+    depends_on:
+      - dvwa
+    networks:
+      - pentest-lab
+
+networks:
+  pentest-lab:
+    driver: bridge
