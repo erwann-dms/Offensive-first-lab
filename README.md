@@ -49,34 +49,43 @@ chmod +x scripts/start.sh
 ## Exemple d’attaque guidée
 ### Objectif : Obtenir un shell sur DVWA
 
-Scan initial
+#### Scan initial
 ```bash
 nmap -sV -p- localhost
 ```
-Accès à DVWA
+#### Accès à DVWA
+
 URL : http://localhost:8081
+
 Identifiants par défaut : admin / password
 
-Configurer DVWA
+#### Configurer DVWA
+
 Dans « DVWA Security » → mettre sur « Low »
 
-Injection SQL
+#### Injection SQL
+
 Menu « SQL Injection »
+
 Tester : 1' OR '1'='1
 
-Obtenir un shell (optionnel)
+#### Obtenir un shell (optionnel)
+
 Uploader un PHP reverse shell
+
 Accéder via l’URL du fichier uploadé
 
-Extensions possibles
-Brute-force SSH via hydra
-Lecture de fichiers sensibles via FTP anonyme
-Capture réseau (ex : tcpdump dans un container)
-Analyse de logs via un SIEM ajouté
+#### Extensions possibles:
+
+- Brute-force SSH via hydra
+- Lecture de fichiers sensibles via FTP anonyme
+- Capture réseau (ex : tcpdump dans un container)
+- Analyse de logs via un SIEM ajouté
 
 ---
 
 ## Avertissement
+
 ⚠️ Ce lab est uniquement à usage pédagogique. Ne jamais l’exposer sur Internet ni l’utiliser sur une infrastructure réelle sans autorisation.
 
 ---
