@@ -15,7 +15,7 @@ Le tableau suivant indique les versions actuellement maintenues avec des mises �
 
 Si vous découvrez une vulnérabilité dans le projet **Offensive-first-lab**, merci de suivre les étapes suivantes :
 
-1. **Contact** : Veuillez envoyer un rapport détaillé par email à l'adresse suivante : `erwann1.dumas[at]outlook.fr`.
+1. **Contact** : Veuillez envoyer un rapport détaillé par email à l'adresse suivante : `erwann1.dumas@outlook.fr`.
 2. **Contenu du rapport** : Incluez dans votre message :
    - Une description claire de la vulnérabilité.
    - Le(s) composant(s) concerné(s) et les étapes de reproduction.
